@@ -60,7 +60,7 @@ func (r *Recipe) Detailed() string {
 	nutrCache := map[uint16]*NutrDef{}
 	foodCache := map[uint32]*FoodDes{}
 
-	for key, ingrdtAmg := range r.Ingredients {
+	for key, ingrdtAmt := range r.Ingredients {
 		foodDes := &FoodDes{
 			Id: key,
 		}
@@ -81,7 +81,7 @@ func (r *Recipe) Detailed() string {
 				}
 				if nutrDef.Display {
 					nt := nutrTotals[nutrDef.Id]
-					amt := (ingrdtAmg / 100.0) * nutrAmt
+					amt := (ingrdtAmt / 100.0) * nutrAmt
 					details[foodDes.Id][nutrDef.Id] = amt
 					nt += amt
 					nutrTotals[nutrDef.Id] = nt
@@ -99,7 +99,7 @@ func (r *Recipe) Detailed() string {
 	for nutrId, _ := range nutrTotals {
 		nutrList = append(nutrList, nutrId)
 		nutrDef := nutrCache[nutrId]
-		fmt.Fprint(w, " ", nutrDef.Name, "\t|")
+		fmt.Fprint(w, " ", nutrDef.Name, " (", nutrDef.Units, ") \t|")
 	}
 	fmt.Fprintln(w)
 

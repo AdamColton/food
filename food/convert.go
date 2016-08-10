@@ -67,18 +67,15 @@ func PopulateDB() error {
 	}
 	defer nutDataFile.Close()
 
-	nutDefBkt := []byte("nutrDef")
 	for nutrDef := range ReadNutrDef(nutrDefFile) {
-		write(nutDefBkt, nutrDef)
+		write(nutrDefBkt, nutrDef)
 	}
 
 	search := searchAggregator{}
-	foodDesBkt := []byte("foodDes")
 	for foodDes := range ReadFoodDes(foodDesFile) {
 		write(foodDesBkt, foodDes)
 		search.Add(foodDes.Id, foodDes.LongDesc)
 	}
-	searchBkt := []byte("search")
 	for _, searchTerm := range search {
 		write(searchBkt, searchTerm)
 	}
@@ -87,7 +84,6 @@ func PopulateDB() error {
 	for nutData := range ReadNutData(nutDataFile) {
 		agg.AddData(nutData)
 	}
-	nutDataBkt := []byte("nutData")
 	for _, nutDataGrp := range agg {
 		write(nutDataBkt, nutDataGrp)
 	}

@@ -34,16 +34,7 @@ func lineReader(f *os.File, ch chan<- string) {
 func splitLine(line string) []string {
 	data := strings.Split(line, "^")
 	for i := 0; i < len(data); i++ {
-		s := data[i]
-		l := len(s)
-		if l > 0 && s[0] == '~' {
-			s = s[1:]
-			l--
-		}
-		if l > 0 && s[l-1] == '~' {
-			s = s[:l-1]
-		}
-		data[i] = s
+		data[i] = strings.Trim(data[i], "~")
 	}
 	return data
 }
